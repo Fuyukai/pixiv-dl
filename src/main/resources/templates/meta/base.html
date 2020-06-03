@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.css">
+    <link rel="stylesheet" href="/static/custom.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script defer
+            src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js"
+            crossorigin="anonymous"></script>
+    <!-- let FA work in case of no JS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+
+    <meta charset="UTF-8">
+
+    <title>Pixiv-DL</title>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://github.com/Fuyukai/pixiv-dl">
+                <i class="fab fa-github" style="padding-right: 5px"></i>
+                <p>pixiv-dl</p>
+            </a>
+        </div>
+
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/views/raws">Raws</a>
+                <a class="navbar-item" href="/views/bookmarks">Bookmarks</a>
+                <a class="navbar-item" href="/views/user">Users</a>
+                <a class="navbar-item" href="/views/tags">Tags</a>
+            </div>
+
+            <div class="navbar-end">
+                <a class="navbar-item" href="/views/search">Search</a>
+                <a class="navbar-item" href="/views/jobs">Jobs</a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container-fluid">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>

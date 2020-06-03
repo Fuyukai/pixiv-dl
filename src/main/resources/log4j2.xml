@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_ERR" follow="true">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{${LOG_LEVEL_PATTERN:-%5p}}{FATAL=red, ERROR=red, WARN=yellow, INFO=green, DEBUG=green, TRACE=green} %style{%pid}{magenta} --- [%t] %style{%-10.40c{1.}}{cyan} : %m%n%ex"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!-- fuck your stupid logo -->
+        <Logger name="org.jooq.Constants" level="warn"/>
+
+        <Logger name="io.netty" level="info"/>
+        <Logger name="io.micronaut.context" level="info"/>
+        <Logger name="io.micronaut.http.server.netty.RoutingInBoundHandler" level="info"/>
+        <Logger name="com.mitchellbosecke.pebble.lexer.TemplateSource" level="info"/>
+
+        <Root level="debug">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

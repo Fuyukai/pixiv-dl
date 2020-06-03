@@ -1,0 +1,66 @@
+{% extends "meta/base.html" %}
+{# Artwork grid page #}
+
+{% import "grids/helpers.html" %}
+{% import "util.peb" %}
+
+{% block content %}
+<section class="section">
+    {% block grid_header %}
+    {% endblock %}
+</section>
+
+{# pagination #}
+<section class="section">
+    {% import "meta/pagination.html" %}
+    {{ create_paginator(offset, total_count, sortmode) }}
+</section>
+
+{# the grid itself #}
+
+<section id="grid-content" class="section">
+    <div class="columns is-multiline">
+
+        {% for card in cards %}
+        <div class="column is-one-fifth">
+            <div class="card has-equal-height">
+                <div class="card-image">
+                    {{ helpers_overlay_image(card) }}
+                </div>
+
+                <div class="card-content">
+                    <p class="title is-4">
+                        <a href="{{ card.captionLink }}">
+                            <abbr title="{{ card.artworkId }}">{{ card.caption }}</abbr>
+                        </a>
+                    </p>
+                    <p class="subtitle is-6">
+                        {% if card.subtitleUrl != null %}
+                        <a href="{{ card.subtitleUrl }}">
+                        {% endif %}
+                            {{ card.subtitle }}
+                        {% if card.subtitleUrl != null %}
+                        </a>
+                        {% endif %}
+                    </p>
+
+                    <!--div class="content">
+                        \{\{ artwork.description \}\}
+                    </div-->
+                </div>
+
+                {% if card.footer is not null %}
+                <div class="card-footer">
+                    <p class="card-footer-item">
+                        <span>
+                            {{ card.footer }}
+                        </span>
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

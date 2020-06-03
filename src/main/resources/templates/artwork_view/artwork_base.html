@@ -1,0 +1,136 @@
+{# Base template including macros #}
+
+{% macro base_author_card(artwork, horizontal=false) %}
+{% import "util.peb" %}
+{% set author_name = artwork.authorName %}
+{% set author_id = artwork.authorId %}
+{% set artwork_title = artwork.title %}
+{% set artwork_id = artwork.id %}
+{% set bookmarked = artwork.bookmarked %}
+{% set uploaded_at = artwork.uploadedAt %}
+
+<div class="card {% if horizontal %}has-equal-height{% endif %}" id="artwork-card-author">
+    <header class="card-header">
+        <p class="card-header-title">
+            By
+            &nbsp;
+            <span class="artwork-author-name">
+                <a href="{{ pdl_author_url(author_id) }}">{{ author_name }}</a>
+            </span>
+            &nbsp;
+            (<a href="{{ pixiv_author_url(author_id) }}" target="_blank"
+                rel="noopener noreferrer">
+            {{ author_id }}</a>)
+
+            {# initially disabled; js will undisable it #}
+            <!--button id="delete-button" class="button delete-button" disabled>
+                <span>Delete</span>
+            </button>
+
+            <script>
+                let button = document.getElementById("delete-button");
+                let span = button.children[0];
+                button.disabled = false;
+                button.onclick = () => {
+                    fetch("{#{{ delete_url(artwork_id) }}#}", {method: "DELETE"}).then((resp) => {
+                        button.disabled = true;
+                        if (resp.ok) {
+                            span.innerHTML = "Deleted";
+                            window.location.replace(document.referrer);
+                        } else {
+                            span.innerHTML = "Failed";
+                        }
+                    }).error((e) => {
+                        span.innerHTML = "Failed, retry";
+                    });
+                };
+            </script-->
+        </p>
+    </header>
+    <div class="card-content">
+        <p class="title is-8">
+            {{ artwork_title }}
+            <a href="{{ pixiv_artwork_url(artwork_id) }}"
+                target="_blank"
+                rel="noopener noreferrer">
+            ({{ artwork_id }})</a>
+        </p>
+        <p class="subtitle is-4">
+            Bookmarked:
+            {% if bookmarked %}
+            <span class="artwork-is-bookmarked">Yes</span>
+            {% else %}
+            <span class="artwork-not-bookmarked">No</span>
+            {% endif %}
+        </p>
+    </div>
+    <div class="card-footer">
+        <div class="card-footer-item">
+            Uploaded at: {{ uploaded_at }}
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro base_caption_card(artwork, horizontal=false) %}
+{% import "util.peb" %}
+<div class="card {% if horizontal %}has-equal-height{% endif %}" id="artwork-card-caption">
+    <header class="card-header">
+        <p class="card-header-title">Caption</p>
+    </header>
+    <div class="card-content">
+        {% if artwork.caption|length <= 0 %}
+        <em>No caption.</em>
+        {% else %}
+        {{ artwork.caption }}
+        {% endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro base_stats_card(artwork, horizontal=false) %}
+{% import "util.peb" %}
+{% set bookmarks = artwork.bookmarks %}
+{% set views = artwork.views %}
+<div class="card {% if horizontal %}has-equal-height{% endif %}" id="artwork-card-stats">
+    <header class="card-header">
+        <p class="card-header-title">Stats</p>
+    </header>
+    <div class="card-content">
+        <div class="content">
+            <p><em>At time of download:</em></p>
+            <ul>
+                <li>Bookmarks: {{ bookmarks }}</li>
+                <li>Views: {{ views }} </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro base_tags_card(artwork, horizontal=false) %}
+{% import "util.peb" %}
+<div class="card {% if horizontal %}has-equal-height{% endif %}" id="artwork-card-tags">
+    <header class="card-header">
+        <p class="card-header-title">Tags</p>
+    </header>
+    <div class="card-content">
+        <div class="content">
+            <ul>
+                {% for tag in artwork.tags %}
+                <li>
+                    <a href="{{ tag_url(tag.name) }}" target="_blank"
+                       rel="noopener noreferrer">
+                        {% if tag.translatedName is not null %}
+                        {{ tag.translatedName }} ({{ tag.name }})
+                        {% else %}
+                        {{ tag.name }}
+                        {% endif %}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endmacro %}

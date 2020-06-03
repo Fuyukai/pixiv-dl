@@ -1,0 +1,29 @@
+version: "3.7"
+
+volumes:
+    postgres-data:
+    minio-data:
+
+
+services:
+    postgresql:
+        image: "postgres:13"
+        environment:
+            - POSTGRES_USER=pixivdl
+            - POSTGRES_PASSWORD=pixivdl
+            - POSTGRES_DB=pixivdl
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        ports:
+            - 34125:5432
+
+    minio:
+        image: minio/minio
+        volumes:
+            - minio-data:/data
+        environment:
+            - MINIO_ACCESS_KEY=keykeykey
+            - MINIO_SECRET_KEY=secretsecret
+        ports:
+            - 34126:9000
+        command: server /data

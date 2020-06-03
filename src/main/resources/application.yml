@@ -1,0 +1,25 @@
+---
+datasources:
+    default:
+        dialect: postgres
+        driverClassName: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:34125/pixivdl
+        username: pixivdl
+        password: pixivdl
+
+---
+micronaut:
+  application:
+    name: "Pixiv-DL"
+
+---
+minio:
+    address: http://127.0.0.1:34126
+    access_key: keykeykey
+    secret_key: secretsecret
+
+---
+flyway:
+  datasources:
+    default:
+      locations: classpath:db/migration

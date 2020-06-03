@@ -1,0 +1,25 @@
+{% macro helpers_overlay_image(card) %}
+<figure class="image is-square">
+    <a href="{{ card.artworkLink }} ">
+        <img src="{{ card.artworkUrl }}"
+             height="250"
+             width="250"
+             class="grid-image {% if card.r18 %}r18{% endif %}"
+        >
+    </a>
+    <span class="is-overlay">
+        {% if card.r18 %}
+        <span class="is-r18">
+            R-18
+        </span>
+        {% endif %}
+        {% if card.pageCount >= 2 %}
+        <span class="is-multiple-pages">
+            <i class="fas fa-layer-group"></i>
+            {{ card.pageCount }}
+        </span>
+        {% endif %}
+    </span>
+
+</figure>
+{% endmacro %}

@@ -69,7 +69,7 @@ class PixivApiImpl(var refreshToken: String? = null, var accessToken: String? = 
          */
         fun pixivUrl(block: HttpUrl.Builder.() -> Unit): HttpUrl {
             val builder = HttpUrl.Builder().scheme("https").host(pixivHost)
-            builder.apply(block)
+            builder.block()
             return builder.build()
         }
     }
